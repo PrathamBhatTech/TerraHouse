@@ -1,0 +1,175 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    
+    <style>
+        html {
+        font-family: Arial;
+        display: inline-block;
+        margin: 0px auto;
+        text-align: center;
+        }
+        h2 { font-size: 3.0rem; }
+        p { font-size: 3.0rem; }
+        .units { font-size: 1.2rem; }
+        .dht-labels{
+        font-size: 1.5rem;
+        vertical-align:middle;
+        padding-bottom: 15px;
+        }
+    </style>
+    <style>
+        /* Style the tab */
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 17px;
+        }
+
+        /* Change background color of buttons on hover */
+        .tab button:hover {
+            background-color: #ddd;
+        }
+
+        /* Create an active/current tablink class */
+        .tab button.active {
+            background-color: #ccc;
+        }
+
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+    </style>
+
+    </head>
+
+    <body>
+        <h2>ESP8266 DHT Server</h2>
+
+        <div class="tab">
+            <button class="tablinks" onclick="openTab(event, 'sensordata')">sensor data</button>
+            <button class="tablinks" onclick="openTab(event, 'sensordata')">choose plant</button>
+        </div>
+
+        <div id="sensordata" class="tabcontent"></div>
+            <p>
+                <i class="fas fa-thermometer-half" style="color:#059e8a;"></i> 
+                <span class="dht-labels">Temperature</span> 
+                <span id="temperature">%TEMPERATURE%</span>
+                <sup class="units">&deg;C</sup>
+            </p>
+            <p>
+                <i class="fas fa-tint" style="color:#00add6;"></i> 
+                <span class="dht-labels">Humidity</span>
+                <span id="humidity">%HUMIDITY%</span>
+                <sup class="units">%</sup>
+            </p>
+
+            <p>
+                <span class="soil-moisture-label">Soil Moisture: </span>
+                <span id="soilmoisture">%SOILMOISTURE%</span>
+                <sup class="units">%</sup>
+            </p>
+
+            <p>
+                <i class="fas fa-sun" style="color: #ffce00"></i>
+                <span class="light-label">Light: </span>
+                <span id="light">%LIGHT%</span>
+                <sup class="units"></sup>
+            </p>
+
+            <p>
+                <i class="fas fa-fire" style="color: #ff5a00"></i>
+                <span class="fire-label">Fire: </span>
+                <span id="fire">%FIRE%</span>
+                <sup class="units"></sup>
+            </p>
+
+            <p>
+                <span class="ph-label">ph: </span>
+                <span id="ph">%PH%</span>
+                <sup class="units"></sup>
+            </p>
+
+            <section class="content">
+                <div class="box gauge--1">
+                    <div class="mask">
+                        <div class="semi-circle"></div>
+                        <div class="semi-circle--mask"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </body>
+
+    <script>
+        function openTab(evt, tabName)  {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
+
+    <script>
+        setInterval(function ( ) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("temperature").innerHTML = this.responseText;
+            }
+        };
+        xhttp.open("GET", "/temperature", true);
+        xhttp.send();
+        }, 10000 ) ;
+
+        setInterval(function ( ) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("humidity").innerHTML = this.responseText;
+            }
+        };
+        xhttp.open("GET", "/humidity", true);
+        xhttp.send();
+        }, 10000 ) ;
+
+        setInterval(function ( ) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("soil_moisture").innerHTML = this.responseText;
+            }
+        };
+        xhttp.open("GET", "/soilmoisture", true);
+        xhttp.send();
+        }, 10000 ) ;
+    </script>
+</html>
+  
