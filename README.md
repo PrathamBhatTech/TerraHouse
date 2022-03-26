@@ -1,5 +1,5 @@
 # Terrahouse
-Terrathon Hackathon Project 
+ 
 Humanity is confronted with the grand challenge of how to increase agricultural production to achieve food security during the 21st century and feed a population that is expected to grow to 10 billion people. 
 
 With food security becoming a larger problem, we need to innovate technologies that facilitate sustainable communities to grow their own produce. Doing this will aid communities and colonies become self-reliant and strengthen food security. This can be done on large scale in agragian parts of the country as shown in the Netherlands, but it also important to be able to implement these techniques in urban living spaces on a smaller scale. This decentralizes and democratizes the process of food production.
