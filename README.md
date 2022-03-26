@@ -4,7 +4,14 @@ Humanity is confronted with the grand challenge of how to increase agricultural 
 
 With food security becoming a larger problem, we need to innovate technologies that facilitate sustainable communities to grow their own produce. Doing this will aid communities and colonies become self-reliant and strengthen food security. This can be done on large scale in agragian parts of the country as shown in the Netherlands, but it also important to be able to implement these techniques in urban living spaces on a smaller scale. This decentralizes and democratizes the process of food production.
 
-In this project, we aim to tackle the above problems.  We will provide several choices for a crop and based on that, our prototype will create and sustain a suitable environment for the chosen crop. We will also be implementing Machine Learning to receive/ record various factor of the crop and determine if the fruits are ripe. 
+## Advantages of Precision Agriculture?
+
+- Drip irrigation using precision agriculture can help reduce the amount of water being used by 70% relative to traditional techniques
+- Precision agriculture methods because of more granular management of soil conditions can help reduce costs spraying by over 15%
+- Sowing costs can be reduced by over 10%
+- The biggest barrier for precision agriculture is the upfront investments required in the technology. But the intial costs can be recovered in around 20-24 months for small scale farmers and in under 15 months for large scale cultivators
+
+In this project, we aim to implement precision agriculture on small scale.  We will provide several choices for a crop and based on that, our prototype will create and sustain a suitable environment for the chosen crop. We will also be implementing Machine Learning to receive/ record various factor of the crop and determine if the fruits are ripe. 
 
 This has massive potential to be expanded into self sustainable communities to help create sustainable precision agricultural environment. 
 
@@ -30,6 +37,6 @@ Following is the hardware we will be using:
       - Choice between multiple preset data of plant conditions for best growth for the type of 
        plant.
 
-Software: 
+## Software: 
 -CNN model to detect ripe fruit and store various factors of crop growth. 
 -Interface to chose the crop
