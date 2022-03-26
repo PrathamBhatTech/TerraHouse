@@ -24,6 +24,39 @@ const char* password = "PASSWORD";
 #define WaterPump 2 // Digital pin connected to the relay operating the water pump
 #define ArtificialSun 14 // Digital pin connected to the Sunlight LED
 
+int plant_id = 0; // id no. of the plant
+
+int dry_wet = 1; // current moisture in soil| 0 - too dry, 1 - perfect, 2 - too wet
+bool bright_dark = true;  // check if there is sun or not| true - sun, false - no sun
+int fire = 0; // No fire - 0, fire - 1
+
+// current temperature & humidity
+float t = 0.0;
+float h = 0.0;
+
+float pH_calibration_value = 21.34 - 0.7;
+int pH_val = 7;
+
+// Structure to store the physical condition range for plants.
+struct PlantConditions {
+  int soilWet;   // Define max value we consider soil 'wet'
+  int soilDry;  // Define min value we consider soil 'dry'
+
+  int hot; // in celsius
+
+  int humid;  // humidity level
+};
+
+// Find values for atleaset 3 plants.
+struct PlantConditions plant[3];
+
+// Generally, you should use "unsigned long" for variables that hold time
+// The value will quickly become too large for an int to store
+unsigned long previousMillis = 0;    // will store last time DHT was updated
+
+// Updates sensor readings every 10 seconds
+const long interval = 10000;  
+
 void setup()  {
   // Serial port at baud rate 115200 for debugging purposes
   Serial.begin(115200);
@@ -40,6 +73,13 @@ void setup()  {
 
   // Attach the servo on pin 10 to the servo object
   WINDOW.attach(10);
+  
+  // Set optimum conditions for different plants
+  // Plant 1 conditions
+  plant[0].soilWet = 500;
+  plant[0].soilDry = 750;
+  plant[0].hot = 40;
+  plant[0].humid = 0;
   
 }
 
