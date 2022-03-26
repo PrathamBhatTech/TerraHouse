@@ -187,6 +187,140 @@ void setup()  {
   
 }
 
+
+void check_temperature()  {
+  // Read temperature as Celsius (the default)
+  float newT = dht.readTemperature();
+  // Read temperature as Fahrenheit (isFahrenheit = true)
+  // float newT = dht.readTemperature(true);
+  // if temperature read failed, don't change t value
+  if (isnan(newT)) {
+    Serial.println("Failed to read from DHT sensor!");
+  }
+  else {
+    t = newT;
+    Serial.println("Temperature: " + (String)t);
+  }
+}
+ 
+void check_humidity() {
+  // Read Humidity
+  float newH = dht.readHumidity();
+  // if humidity read failed, don't change h value 
+  if (isnan(newH)) {
+    Serial.println("Failed to read from DHT sensor!");
+  }
+  else {
+    h = newH;
+    Serial.println("Humidity: " + (String)h);
+  }
+}
+
+// Returns 0 - Too dry, 1 - Perfect, 2 - Too wet
+void check_soil_moisture()  {
+  digitalWrite(SoilMoisturePower, HIGH);    // Turn the sensor ON
+  delay(10);                               // Allow power to settle
+  int moisture = analogRead(SoilMoisture);   // Read the analog value form sensor
+  digitalWrite(SoilMoisturePower, LOW);  // Turn the sensor OFF
+
+  Serial.print("Soil Moisture: " + (String)moisture + "\n");
+
+  // Determine status of our soil
+  if (moisture < plant[plant_id].soilWet) {
+    Serial.println("Status: Soil is too wet");
+    dry_wet = 2;
+  } else if (moisture >= plant[plant_id].soilWet && moisture < plant[plant_id].soilDry) {
+    Serial.println("Status: Soil moisture is perfect");
+    dry_wet = 1;
+  } else {
+    Serial.println("Status: Soil is too dry - time to water!");
+    dry_wet = 0;
+  }
+}
+
+
+// false - dark, true - light
+void check_light()  {
+  int light = analogRead(LDR) * 4; // Since NodeMCU has 10-bit ADC (0-1023)
+  Serial.print("Light: " + (String)light + "\n");  // Print the values to the serial monitor for creating database
+  
+  if (light < 1400)
+    bright_dark = false; // dark
+  else
+    bright_dark = true; // bright
+}
+
+void check_fire() {
+   int fire_sensor_data = analogRead(Gas);
+   Serial.print("fire data: " + (String)fire_sensor_data);
+
+   if(fire_sensor_data > fire_threshold)  {
+    fire = 1;
+   }
+   else {
+    fire = 0;
+   }
+}
+
+void check_pH() {
+  pH_val = analogRead(pH);  // Read the voltage value from the analog pin
+
+  float volt = (float)pH_val*5.0/1024/6; 
+  pH_val = -5.70 * volt + pH_calibration_value;  // Convert the value read from the analog pin to pH value using formulas
+
+  Serial.print("pH: " + (String)pH_val);
+}
+
+// open - true, close - false
+void open_close_window(bool pos) {  
+  if (pos)  // Set window to open
+    WINDOW.write(0);
+  else  // Set window to close
+    WINDOW.write(90);
+}
+
+// True is on and False off
+void artificial_sun(bool on_off)  { 
+  if (on_off)
+    digitalWrite(ArtificialSun, HIGH);
+  else
+    digitalWrite(ArtificialSun, LOW);
+}
+
+// open - 1, close - 0
+void irrigate(bool on_off) {
+  if (on_off)
+    digitalWrite(WaterPump, HIGH);
+  else
+    digitalWrite(WaterPump, LOW);
+}
+
+// Checks all the values from the sensors and maintains them within the range
+// by running the corresponding actuators
+void maintain_conditions()  {
+  // maintain Temperature
+  if (t > plant[plant_id].hot)
+    open_close_window(true);
+  else
+    open_close_window(false);
+
+  // maintain humidity
+  // probably use the same code as temperature 
+  // cause only way to maintain is open window and a humidifier or something
+
+  // maintain soil moisture
+  if (!dry_wet)
+    irrigate(true);
+  else
+    irrigate(false);
+
+  // check if its bright or not
+//   if(!bright_dark)
+//     artificial_sun(true);
+//   else
+//     artificial_sun(false);
+}
+
 void loop() {
   unsigned long currentMillis = millis();
   if (currentMillis - previousMillis >= interval) {
@@ -194,14 +328,14 @@ void loop() {
     previousMillis = currentMillis;
 
     // Collect data from sensors and store in global variables
-//     check_temperature();
-//     check_humidity();
-//     check_soil_moisture();
+    check_temperature();
+    check_humidity();
+    check_soil_moisture();
 //     check_light();
-//     check_fire();
-//     check_pH();
+    check_fire();
+    check_pH();
 
     // Use data from sensors in global variables to keep physical conditions within range
-//     maintain_conditions();
+    maintain_conditions();
   }
 }
