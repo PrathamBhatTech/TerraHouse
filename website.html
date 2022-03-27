@@ -63,10 +63,9 @@
 
     <body>
         <h2>ESP8266 DHT Server</h2>
-
         <div class="tab">
             <button class="tablinks" onclick="openTab(event, 'sensordata')">sensor data</button>
-            <button class="tablinks" onclick="openTab(event, 'sensordata')">choose plant</button>
+            <button class="tablinks" onclick="openTab(event, 'chooseplant')">choose plant</button>
         </div>
 
         <div id="sensordata" class="tabcontent"></div>
@@ -90,6 +89,7 @@
             </p>
 
             <p>
+                <i class="fa-solid fa-plus" style="color:#00add6;"></i>
                 <span class="ph-label">ph: </span>
                 <span id="ph">%PH%</span>
                 <sup class="units"></sup>
