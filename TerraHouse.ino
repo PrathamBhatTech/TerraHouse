@@ -309,24 +309,24 @@ void setup()  {
 
   // Set optimum conditions for different plants
   // Plant 1 conditions
-  plant[0].soilDry = 20;  // Percentage of water in the soil
-  plant[0].hot = 25.5;
+  plant[0].soilDry = 100;  // Percentage of water in the soil
+  plant[0].hot = 27;
   plant[0].humid = 30;
 
-  // potato plant 2
-  plant[0].soilDry = 50;  // Percentage of water in the soil
-  plant[0].hot = 22;
-  plant[0].humid = 60;
-
-  // plant 3 carrot
-  plant[0].soilDry = 40;  // Percentage of water in the soil
-  plant[0].hot = 20;
-  plant[0].humid = 55;
-
-  // plant 4 chillis
-  plant[0].soilDry = 15;  // Percentage of water in the soil
-  plant[0].hot = 32;
-  plant[0].humid = 5;
+//  // potato plant 2
+//  plant[1].soilDry = 50;  // Percentage of water in the soil
+//  plant[1].hot = 22;
+//  plant[1].humid = 60;
+//
+//  // plant 3 carrot
+//  plant[2].soilDry = 40;  // Percentage of water in the soil
+//  plant[2].hot = 20;
+//  plant[2].humid = 55;
+//
+//  // plant 4 chillis
+//  plant[3].soilDry = 15;  // Percentage of water in the soil
+//  plant[3].hot = 32;
+//  plant[3].humid = 5;
 }
 
 
