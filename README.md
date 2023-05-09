@@ -40,3 +40,8 @@ Following is the hardware we will be using:
 ## Software: 
 -CNN model to detect ripe fruit and store various factors of crop growth. 
 -Interface to chose the crop
+
+## Images
+![Angle View](/_MG_6115.JPG)
+![Front View](/_MG_6119.JPG)
+![Top View](/_MG_6128.JPG)
